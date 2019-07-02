@@ -4,6 +4,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -236,18 +237,18 @@ public class ConnectThread {
                 String readMessage = new String(buffer, 0, bytes);
                 // Send the obtained bytes to the UI Activity via handler
                 Log.i("logging", readMessage + "");
-                if (data.length() + readMessage.length() < 10) {
+                if (data.length() + readMessage.length() < 12) {
                     data.append(readMessage);
-                } else if (data.length() + readMessage.length() == 10) {
+                } else if (data.length() + readMessage.length() == 12) {
                     data.append(readMessage);
-                    activity.updateChart(data.toString());
+                    updateChart(data.toString());
                     data = new StringBuilder();
                 } else {
-                    while (data.length() != 10) {
+                    while (data.length() != 12) {
                         data.append(readMessage.charAt(0));
                         readMessage = readMessage.substring(1);
                     }
-                    activity.updateChart(data.toString());
+                    updateChart(data.toString());
                     data = new StringBuilder(readMessage);
                 }
             } catch (IOException e) {
@@ -255,5 +256,13 @@ public class ConnectThread {
             }
 
         }
+    }
+
+    private void updateChart(String data) {
+        new AppExecutors().mainThread().execute(() -> {
+            activity.updateChart(data);
+            Toast.makeText(activity, data, Toast.LENGTH_SHORT).show();
+        });
+
     }
 }

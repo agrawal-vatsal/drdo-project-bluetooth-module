@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String DEVICE_NAME = "HC-05";
     public BarChart chart;
+    ConnectThread thread;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        final ConnectThread thread = new ConnectThread(device, true, adapter, null, this);
+        thread = new ConnectThread(device, true, adapter, null, this);
 
         new AppExecutors().networkIO().execute(() -> {
             try {
@@ -77,5 +78,6 @@ public class MainActivity extends AppCompatActivity {
         chart.setData(barData);
         chart.invalidate();
     }
+
     //00:18:EF:03:DD:02
 }
