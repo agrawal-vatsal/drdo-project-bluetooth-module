@@ -2,6 +2,7 @@ package drdo.drdoproject;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
@@ -18,7 +19,7 @@ import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String DEVICE_NAME = "HC-05";
+    public static String DEVICE_NAME = "HC-05";
     public BarChart chart;
     ConnectThread thread;
 
@@ -28,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         chart = findViewById(R.id.chart);
 
+        Intent intent = getIntent();
+        DEVICE_NAME = intent.getStringExtra("deviceName");
 
         BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
         Set<BluetoothDevice> bluetoothDevices = adapter.getBondedDevices();

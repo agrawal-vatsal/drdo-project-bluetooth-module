@@ -40,7 +40,7 @@ public class ConnectThread {
         this.uuidCandidates = uuidCandidates;
         this.activity = activity;
         if (this.uuidCandidates == null || this.uuidCandidates.isEmpty()) {
-            this.uuidCandidates = new ArrayList<UUID>();
+            this.uuidCandidates = new ArrayList<>();
             this.uuidCandidates.add(UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"));
         }
     }
