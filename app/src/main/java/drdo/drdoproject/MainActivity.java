@@ -54,7 +54,24 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.led_on).setOnClickListener(v -> {
+            try {
+                thread.sendData(thread.bluetoothSocket, '1');
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        findViewById(R.id.led_off).setOnClickListener(v -> {
+            try {
+                thread.sendData(thread.bluetoothSocket, '0');
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
     }
+
 
     public void updateChart(String data) {
         ArrayList<Integer> yValues = new ArrayList<>();

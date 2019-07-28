@@ -17,7 +17,7 @@ import java.util.UUID;
 
 public class ConnectThread {
 
-    private BluetoothSocketWrapper bluetoothSocket;
+    public BluetoothSocketWrapper bluetoothSocket;
     private BluetoothDevice device;
     private boolean secure;
     private BluetoothAdapter adapter;
@@ -99,7 +99,7 @@ public class ConnectThread {
         return true;
     }
 
-    public static interface BluetoothSocketWrapper {
+    public interface BluetoothSocketWrapper {
 
         InputStream getInputStream() throws IOException;
 
@@ -217,11 +217,13 @@ public class ConnectThread {
 
     }
 
-    public void sendData(BluetoothSocketWrapper socket, int data) throws IOException {
+    void sendData(BluetoothSocketWrapper socket, char data) throws IOException {
         ByteArrayOutputStream output = new ByteArrayOutputStream(4);
         output.write(data);
         OutputStream outputStream = socket.getOutputStream();
         outputStream.write(output.toByteArray());
+        Log.d("TAG", data + "");
+        Log.d("DATA", "DATA SENT");
     }
 
     private void receiveData(BluetoothSocketWrapper socket) throws IOException {
